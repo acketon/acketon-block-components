@@ -1,0 +1,109 @@
+/*!*************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!../components/post-chooser/editor.scss ***!
+  \*************************************************************************************************************************************************************************************************************************************************************/
+.acketon-components-post-chooser-modal {
+  max-width: 768px;
+  width: 500px;
+}
+.acketon-components-post-chooser-modal .components-radio-control .components-base-control__field {
+  display: flex;
+  flex-wrap: wrap;
+}
+.acketon-components-post-chooser-modal .components-radio-control .components-base-control__field label.components-base-control__label {
+  width: 100%;
+  display: block;
+}
+.acketon-components-post-chooser-modal .components-radio-control .components-base-control__field .components-radio-control__option label {
+  margin-right: 10px;
+}
+.acketon-components-post-chooser-modal .components-radio-control .components-base-control__field .components-radio-control__option:last-child label {
+  margin-right: 0;
+}
+.acketon-components-post-chooser-modal .acketon-components-post-chooser-search-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.acketon-components-post-chooser-modal .acketon-components-post-chooser-search-bar .acketon-components-post-chooser-search-button {
+  margin: 19px 10px 10px 10px;
+  display: block;
+}
+.acketon-components-post-chooser-modal .acketon-components-post-chooser-results-item-container {
+  border: 1px solid lightgray;
+  padding: 3px 10px 3px 5px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 0px 60px;
+  grid-template-columns: 1fr 60px;
+  -ms-grid-rows: 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+      grid-template-areas: "content select";
+}
+.acketon-components-post-chooser-modal .acketon-components-post-chooser-results-item-container .acketon-components-post-chooser-results-item-inner {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: content;
+  padding: 4px;
+  margin-right: 5px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 0px 60px;
+  grid-template-columns: 1fr 60px;
+  -ms-grid-rows: 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+      grid-template-areas: "postdetails posttype";
+}
+.acketon-components-post-chooser-modal .acketon-components-post-chooser-results-item-container .acketon-components-post-chooser-results-item-inner .acketon-components-post-chooser-results-item-postdetails {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: postdetails;
+}
+.acketon-components-post-chooser-modal .acketon-components-post-chooser-results-item-container .acketon-components-post-chooser-results-item-inner .acketon-components-post-chooser-results-item-postdetails .acketon-components-post-chooser-results-item-title {
+  font-weight: bold;
+}
+.acketon-components-post-chooser-modal .acketon-components-post-chooser-results-item-container .acketon-components-post-chooser-results-item-inner .acketon-components-post-chooser-results-item-postdetails .acketon-components-post-chooser-results-item-modified,
+.acketon-components-post-chooser-modal .acketon-components-post-chooser-results-item-container .acketon-components-post-chooser-results-item-inner .acketon-components-post-chooser-results-item-postdetails .acketon-components-post-chooser-results-item-status {
+  font-size: 0.8em;
+  font-style: italic;
+}
+.acketon-components-post-chooser-modal .acketon-components-post-chooser-results-item-container .acketon-components-post-chooser-results-item-inner .acketon-components-post-chooser-results-item-posttype {
+  -ms-grid-row: 1;
+  -ms-grid-column: 3;
+  grid-area: posttype;
+  -ms-grid-row-align: center;
+      align-self: center;
+  justify-content: flex-end;
+  text-align: right;
+}
+.acketon-components-post-chooser-modal .acketon-components-post-chooser-results-item-container .acketon-components-post-chooser-results-item-inner .acketon-components-post-chooser-results-item-posttype .acketon-components-post-chooser-results-item-type {
+  background: #73959e;
+  border-radius: 5px;
+  padding: 3px 6px;
+  color: white;
+  text-transform: capitalize;
+  font-size: 0.9em;
+  margin: 0 5px;
+}
+.acketon-components-post-chooser-modal .acketon-components-post-chooser-results-item-container .acketon-components-post-chooser-item-select-button {
+  -ms-grid-row: 1;
+  -ms-grid-column: 3;
+  grid-area: select;
+  text-align: center;
+  -ms-grid-row-align: center;
+      align-self: center;
+}
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/editor.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-create-block-examplecomponents {
+  border: 1px dotted #f00;
+}
+
+/*# sourceMappingURL=index.css.map*/

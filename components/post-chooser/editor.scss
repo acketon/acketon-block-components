@@ -1,0 +1,106 @@
+.acketon-components-post-chooser-modal {
+    max-width: 768px;
+    width: 500px;
+
+    .components-radio-control {
+        .components-base-control__field {
+            display: flex;
+            flex-wrap: wrap;
+            
+            label.components-base-control__label {
+                width: 100%;
+                display: block;
+            }
+
+            .components-radio-control__option {
+                label {
+                    margin-right: 10px;
+                }
+
+                &:last-child {
+                    label {
+                        margin-right: 0;
+                    }
+                }
+            }
+            
+        }
+    }
+
+    .acketon-components-post-chooser-search-bar {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        .acketon-components-post-chooser-search-button {
+            margin: 19px 10px 10px 10px;
+            display: block;
+        }
+    }
+
+
+    .acketon-components-post-chooser-results-item-container {
+        border: 1px solid lightgray;
+        padding: 3px 10px 3px 5px;
+        display: grid; 
+        grid-template-columns: 1fr 60px; 
+        grid-template-rows: 1fr; 
+        gap: 0px 0px; 
+        grid-template-areas: "content select";
+
+        .acketon-components-post-chooser-results-item-inner {
+            grid-area: content;
+            
+            padding: 4px;
+            margin-right: 5px;
+            display: grid; 
+            grid-template-columns: 1fr 60px; 
+            grid-template-rows: 1fr; 
+            gap: 0px 0px; 
+            grid-template-areas: "postdetails posttype";
+
+            .acketon-components-post-chooser-results-item-postdetails {
+                grid-area: postdetails;
+
+                .acketon-components-post-chooser-results-item-title {
+                    font-weight: bold;
+                }
+    
+                
+    
+                .acketon-components-post-chooser-results-item-modified,
+                .acketon-components-post-chooser-results-item-status {
+                    font-size: 0.8em;
+                    font-style: italic;
+                }
+            }
+
+            .acketon-components-post-chooser-results-item-posttype {
+                grid-area: posttype;
+                align-self: center;
+                justify-content: flex-end;
+                text-align: right;
+
+                .acketon-components-post-chooser-results-item-type {
+                    background: #73959e;
+                    border-radius: 5px;
+                    padding: 3px 6px;
+                    color: white;
+                    text-transform: capitalize;
+                    font-size: 0.9em;
+                    margin: 0 5px;
+                }
+            }
+
+            
+        }
+
+
+        .acketon-components-post-chooser-item-select-button {
+            grid-area: select;
+            text-align: center;
+            align-self: center;
+        }
+    }
+
+}

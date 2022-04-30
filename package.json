@@ -1,0 +1,17 @@
+{
+  "name": "acketon-block-components",
+  "description": "Reusable Block Components for Plugins and Themes",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Dakota Chichester",
+  "contributors": [
+    "Dakota Chichester <acketon@gmail.com>"
+  ],
+  "scripts": {},
+  "dependencies": {
+    "@wordpress/api-fetch": "^6.0.0",
+    "classnames": "^2.2.6",
+    "@wordpress/env": "^4.4.0"
+  },
+  "devDependencies": {}
+}

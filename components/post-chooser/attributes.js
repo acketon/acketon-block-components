@@ -12,18 +12,12 @@ const PostChooserAttributes = {
 	postChooserPostTitle: {
 		type: 'string',
 	},
-	postChooserPostPublication: {
+	postChooserPostExcerpt: {
 		type: 'string',
-	},
-	postChooserPostPublicationID: {
-		type: 'number',
 	},
 	postChooserPostThumbnail: {
 		type: 'boolean',
 		default: false,
-	},
-	postChooserPostImages: {
-		type: 'array',
 	},
 	postChooserPostImageID: {
 		type: 'number',

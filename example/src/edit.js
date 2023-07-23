@@ -13,6 +13,8 @@ import { __ } from '@wordpress/i18n';
  */
 import { useBlockProps } from '@wordpress/block-editor';
 
+import { Fragment } from '@wordpress/element';
+
 
 import { PostChooser, PostChooserAttributes } from 'acketon-block-components';
 
@@ -33,21 +35,74 @@ import './editor.scss';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit() {
+export default function Edit( props ) {
+	console.log(props);
+	// Get the block properties.
+	const {
+		attributes,
+		setAttributes,
+	} = props;
+
+	// Get the block attributes.
+	const {
+		featuredPostID,
+		postChooserPostID,
+		postChooserPostTitle,
+		postChooserPostExcerpt,
+	} = attributes;
+
+	let selectedPostObject = false;
+
+	console.log( attributes );
+
 	return (
-		<div>
+		<div className='example-featured-post-block'>
 			<p { ...useBlockProps() }>
 				{ __(
 					'Example Components – hello from the editor!',
 					'examplecomponents'
 				) }
 			</p>
-			<PostChooser
-				label="Choose Wisely"
-				buttonLabel="Choose..."
-				placeholder="Pick something..."
-				onSelectPost={ (post) => { console.log("hello"); console.log(post); } }
-			/>
+			
+			<figure>
+				{ postChooserPostID && 
+					<img src="" />
+				}
+				{ ! postChooserPostID && 
+					<PostChooser
+						label="Choose Wisely"
+						buttonLabel="Choose..."
+						placeholder="Pick something..."
+						onSelectPost={ (post) => { 
+								//console.log(post);
+								//selectedPostObject = post;
+								//console.log(selectedPostObject);
+								//setAttributes( { featuredPostID: post.id } )
+							} 
+						}
+						setAttributes={ setAttributes }
+					/>
+				}
+			</figure>
+			<div className='example-featured-post-block-content'>
+				{console.log(selectedPostObject)}
+				{ ! postChooserPostID && 
+					<Fragment>
+						<h2>Select a Post</h2>
+						<p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean lacinia bibendum nulla sed consectetur.</p>
+					</Fragment>
+				}
+				{ postChooserPostID && 
+					<Fragment>
+						{console.log(postChooserPostID)}
+						<h2>{ postChooserPostTitle }</h2>
+						<p>{ postChooserPostExcerpt }</p>
+					</Fragment>
+				}
+
+			</div>
+			
+			
 		</div>
 	);
 }

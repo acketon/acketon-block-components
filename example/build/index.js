@@ -22,18 +22,12 @@ const PostChooserAttributes = {
   postChooserPostTitle: {
     type: 'string'
   },
-  postChooserPostPublication: {
+  postChooserPostExcerpt: {
     type: 'string'
-  },
-  postChooserPostPublicationID: {
-    type: 'number'
   },
   postChooserPostThumbnail: {
     type: 'boolean',
     default: false
-  },
-  postChooserPostImages: {
-    type: 'array'
   },
   postChooserPostImageID: {
     type: 'number'
@@ -73,12 +67,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_10__);
 
 
 /**
@@ -94,6 +90,7 @@ __webpack_require__.r(__webpack_exports__);
  // Internal dependencies.
 
  // WordPress dependencies.
+
 
 
 
@@ -115,7 +112,8 @@ const PostChooser = props => {
     minCharacters = 3,
     customEndpoint = false,
     metaQueryArgs,
-    customQueryArgs
+    customQueryArgs,
+    setAttributes
   } = props; // Modal State Handlers.
 
   const [isModalOpen, setIsModalOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false); // Search Results State.
@@ -164,27 +162,27 @@ const PostChooser = props => {
         }
 
         console.log(postTypes);
-        let path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_9__.addQueryArgs)(restPath, {
+        let path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_10__.addQueryArgs)(restPath, {
           post_type: postTypes
         });
-        path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_9__.addQueryArgs)(path, {
+        path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_10__.addQueryArgs)(path, {
           search: searchString
         }); // Add the title_only argument if needed.
 
         if (titleOnly) {
-          path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_9__.addQueryArgs)(path, {
+          path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_10__.addQueryArgs)(path, {
             title_only: true
           });
         } // Add custom query args.
 
 
         if (typeof customQueryArgs === 'object' && customQueryArgs !== null) {
-          path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_9__.addQueryArgs)(path, customQueryArgs);
+          path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_10__.addQueryArgs)(path, customQueryArgs);
         }
 
         console.log(path); // Make the request to the standard endpoint.
 
-        const request = _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_8___default()({
+        const request = _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_9___default()({
           path: path
         }); // Add this request to the requests array.
 
@@ -194,35 +192,30 @@ const PostChooser = props => {
         postTypes.forEach(postType => {
           // Build a request for each post type.
           // Use the standard but simpler endpoint.
-          let path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_9__.addQueryArgs)(`/wp/v2/${postType}`, {//search: searchString,
+          let path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_10__.addQueryArgs)(`/wp/v2/${postType}`, {//search: searchString,
           }); // Add the Slug argument if needed.
 
           if ('slug' === searchType) {
-            path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_9__.addQueryArgs)(path, {
+            path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_10__.addQueryArgs)(path, {
               slug: searchString
             });
           } else if ('postid' === searchType) {
-            path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_9__.addQueryArgs)(path, {
+            path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_10__.addQueryArgs)(path, {
               include: searchString
             });
           } else {
-            path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_9__.addQueryArgs)(path, {
+            path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_10__.addQueryArgs)(path, {
               search: searchString
             });
           }
 
           console.log(path); // Make the request to the standard endpoint.
 
-          const request = _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_8___default()({
+          const request = _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_9___default()({
             path: path
           }); // Add this request to the requests array.
 
-          requests.push(request); // request.then( ( posts ) => {
-          //     // A fetch Promise doesn't have an abort option. It's mimicked by
-          //     // comparing the request reference in on the instance, which is
-          //     // reset or deleted on subsequent requests or unmounting.
-          //     console.log( posts );
-          // } );
+          requests.push(request);
         });
       }
 
@@ -235,15 +228,23 @@ const PostChooser = props => {
     }
   };
 
-  const handleItemSelection = function (item) {
-    if (item === 0) {
+  const handleItemSelection = function (post, featuredImage) {
+    if (post === 0) {
       setSelectedItem(null);
     }
 
-    setSelectedItem(item); // Call passed onSelectPost Function.
+    setSelectedItem(post);
+    console.log(post);
+    setAttributes({
+      postChooserPostID: post.id,
+      postChooserPostType: post.type,
+      postChooserPostTitle: post.title.rendered,
+      postChooserPostExcerpt: post.excerpt.rendered,
+      postChooserPostThumbnail: featuredImage
+    }); // Call passed onSelectPost Function.
 
     if (onSelectPost instanceof Function) {
-      onSelectPost(item);
+      onSelectPost(post);
     }
   };
 
@@ -253,6 +254,28 @@ const PostChooser = props => {
       title,
       post
     } = props;
+    const {
+      featuredImage,
+      fetchedFeaturedImage = false
+    } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_7__.useSelect)(select => {
+      const {
+        getMedia
+      } = select('core');
+      const featuredImageId = post.featured_media;
+      return {
+        fetchedFeaturedImage: true,
+        featuredImage: featuredImageId ? select('core').getMedia(featuredImageId) : null
+      };
+    }); // const { featuredImage } = useSelect( ( select ) => {
+    //     const { getMedia } = select( 'core' );
+    //     const featuredImageId = post.featured_media;
+    //     const featuredImageObject = ( featuredImageId ) ? select( 'core' ).getMedia( featuredImageId ) : null,
+    //     return {
+    //         featuredImage: featuredImageObject,
+    //     };
+    // } );
+
+    console.log("The featured image: ", featuredImage);
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: 'acketon-components-post-chooser-results-item-container'
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -269,10 +292,10 @@ const PostChooser = props => {
       className: 'acketon-components-post-chooser-results-item-posttype'
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       className: 'acketon-components-post-chooser-results-item-type'
-    }, post.type))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Button, {
+    }, post.type))), fetchedFeaturedImage && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Button, {
       className: "acketon-components-post-chooser-item-select-button",
       isSecondary: true,
-      onClick: () => handleItemSelection(post)
+      onClick: () => handleItemSelection(post, featuredImage)
     }, "Select"));
   };
 
@@ -385,6 +408,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
@@ -402,16 +426,39 @@ __webpack_require__.r(__webpack_exports__);
  * @return {WPElement} Element to render.
  */
 
-function Edit() {
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)(), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Example Components – hello from the editor!', 'examplecomponents')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(acketon_block_components__WEBPACK_IMPORTED_MODULE_3__.PostChooser, {
+function Edit(props) {
+  console.log(props); // Get the block properties.
+
+  const {
+    attributes,
+    setAttributes
+  } = props; // Get the block attributes.
+
+  const {
+    featuredPostID,
+    postChooserPostID,
+    postChooserPostTitle,
+    postChooserPostExcerpt
+  } = attributes;
+  let selectedPostObject = false;
+  console.log(attributes);
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "example-featured-post-block"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)(), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Example Components – hello from the editor!', 'examplecomponents')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", null, postChooserPostID && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    src: ""
+  }), !postChooserPostID && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(acketon_block_components__WEBPACK_IMPORTED_MODULE_3__.PostChooser, {
     label: "Choose Wisely",
     buttonLabel: "Choose...",
     placeholder: "Pick something...",
-    onSelectPost: post => {
-      console.log("hello");
-      console.log(post);
-    }
-  }));
+    onSelectPost: post => {//console.log(post);
+      //selectedPostObject = post;
+      //console.log(selectedPostObject);
+      //setAttributes( { featuredPostID: post.id } )
+    },
+    setAttributes: setAttributes
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "example-featured-post-block-content"
+  }, console.log(selectedPostObject), !postChooserPostID && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Select a Post"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean lacinia bibendum nulla sed consectetur.")), postChooserPostID && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, console.log(postChooserPostID), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, postChooserPostTitle), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, postChooserPostExcerpt))));
 }
 
 /***/ }),
@@ -426,14 +473,16 @@ function Edit() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
-/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./save */ "./src/save.js");
+/* harmony import */ var acketon_block_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! acketon-block-components */ "../index.js");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./save */ "./src/save.js");
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
+
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -457,15 +506,18 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('create-block/examplecomponents', {
+  attributes: { ...acketon_block_components__WEBPACK_IMPORTED_MODULE_1__.PostChooserAttributes
+  },
+
   /**
    * @see ./edit.js
    */
-  edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
+  edit: _edit__WEBPACK_IMPORTED_MODULE_3__["default"],
 
   /**
    * @see ./save.js
    */
-  save: _save__WEBPACK_IMPORTED_MODULE_3__["default"]
+  save: _save__WEBPACK_IMPORTED_MODULE_4__["default"]
 });
 
 /***/ }),
@@ -705,6 +757,17 @@ module.exports = window["wp"]["components"];
 
 "use strict";
 module.exports = window["wp"]["compose"];
+
+/***/ }),
+
+/***/ "@wordpress/data":
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
+/***/ (function(module) {
+
+"use strict";
+module.exports = window["wp"]["data"];
 
 /***/ }),
 

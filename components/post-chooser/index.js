@@ -35,6 +35,8 @@ import {
     RadioControl,
 } from '@wordpress/components';
 
+import { withSelect, select, useSelect } from '@wordpress/data';
+
 // import {
 // 	decodeEntities
 // } from '@wordpress/htmlEntities';
@@ -62,6 +64,7 @@ export const PostChooser = ( props ) => {
         customEndpoint = false,
         metaQueryArgs,
         customQueryArgs,
+        setAttributes,
     } = props;
 
     // Modal State Handlers.
@@ -206,15 +209,6 @@ export const PostChooser = ( props ) => {
 
                     // Add this request to the requests array.
                     requests.push( request );
-
-                    // request.then( ( posts ) => {
-                    //     // A fetch Promise doesn't have an abort option. It's mimicked by
-                    //     // comparing the request reference in on the instance, which is
-                    //     // reset or deleted on subsequent requests or unmounting.
-                        
-            
-                    //     console.log( posts );
-                    // } );
                 } );
             }
 
@@ -231,15 +225,30 @@ export const PostChooser = ( props ) => {
 		
     };
 
-    const handleItemSelection = function( item ) {
-        if ( item === 0) {
+    const handleItemSelection = function( post, featuredImage ) {
+        if ( post === 0) {
             setSelectedItem( null );
         }
-        setSelectedItem( item );
+        setSelectedItem( post );
+
+        console.log(post);
+        
+
+        
+
+        
+
+        setAttributes( {
+			postChooserPostID: post.id,
+			postChooserPostType: post.type,
+			postChooserPostTitle: post.title.rendered,
+            postChooserPostExcerpt: post.excerpt.rendered,
+            postChooserPostThumbnail: featuredImage
+		} );
 
         // Call passed onSelectPost Function.
         if ( onSelectPost instanceof Function ) {
-            onSelectPost( item );
+            onSelectPost( post );
         }
     }
 
@@ -249,6 +258,28 @@ export const PostChooser = ( props ) => {
             title,
             post
         } = props;
+
+        const { featuredImage, fetchedFeaturedImage = false } = useSelect( ( select ) => {
+            const { getMedia } = select( 'core' );
+            const featuredImageId = post.featured_media;
+
+            return {
+                fetchedFeaturedImage: true,
+                featuredImage: ( featuredImageId ) ? select( 'core' ).getMedia( featuredImageId ) : null,
+            };
+        } );
+
+        // const { featuredImage } = useSelect( ( select ) => {
+        //     const { getMedia } = select( 'core' );
+        //     const featuredImageId = post.featured_media;
+        //     const featuredImageObject = ( featuredImageId ) ? select( 'core' ).getMedia( featuredImageId ) : null,
+
+        //     return {
+        //         featuredImage: featuredImageObject,
+        //     };
+        // } );
+
+        console.log( "The featured image: ", featuredImage );
        
         return (
             <div className={ 'acketon-components-post-chooser-results-item-container' }>
@@ -266,11 +297,13 @@ export const PostChooser = ( props ) => {
                         <span className={ 'acketon-components-post-chooser-results-item-type' }>{ post.type }</span>
                     </div>
                 </div>
-                <Button
-                    className="acketon-components-post-chooser-item-select-button"
-                    isSecondary
-                    onClick={() => handleItemSelection(post)}
-                >Select</Button>
+                { fetchedFeaturedImage &&
+                    <Button
+                        className="acketon-components-post-chooser-item-select-button"
+                        isSecondary
+                        onClick={() => handleItemSelection(post, featuredImage)}
+                    >Select</Button>
+                }
             </div>
         );
     }

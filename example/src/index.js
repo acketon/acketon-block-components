@@ -5,6 +5,8 @@
  */
 import { registerBlockType } from '@wordpress/blocks';
 
+import { PostChooserAttributes } from 'acketon-block-components';
+
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * All files containing `style` keyword are bundled together. The code used
@@ -26,6 +28,9 @@ import save from './save';
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 registerBlockType( 'create-block/examplecomponents', {
+	attributes: {
+		...PostChooserAttributes,
+	},
 	/**
 	 * @see ./edit.js
 	 */
